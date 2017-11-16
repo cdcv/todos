@@ -1,94 +1,59 @@
 <template name="App_body">
-  {{#HammerTouchArea gestureMap=templateGestures}}
-    <div id="container" class="{{menuOpen}} {{cordova}}">
-      <section id="menu">
-        <div class="language-toggle">
-          {{#each language in languages}}
-            {{#if isActiveLanguage language}}
-              <span class="active">{{language}}</span>
-            {{else}}
-              <a href="#" class="js-toggle-language">{{language}}</a>
-            {{/if}}
-          {{/each}}
-        </div>
-        {{#if currentUser}}
-          <div class="btns-group-vertical">
-            <a href="#" class="js-user-menu btn-secondary">
-              {{#if userMenuOpen}}
-                <span class="icon-arrow-up"></span>
-                {{else}}
-                <span class="icon-arrow-down"></span>
-              {{/if}}
+    <ons-page id="menuPage">
 
-              {{emailLocalPart}}
-            </a>
-            {{#if userMenuOpen}}
-              <a class="js-logout btn-secondary">
-                {{_ 'layouts.appBody.logout'}}
-              </a>
-            {{/if}}
-          </div>
-        {{else}}
-          <div class="btns-group">
-            <a href="{{pathFor 'signin'}}" class="btn-secondary">
-              {{_ 'layouts.appBody.login'}}
-            </a>
-            <a href="{{pathFor 'join'}}" class="btn-secondary">
-              {{_ 'layouts.appBody.join'}}
-            </a>
-          </div>
-        {{/if}}
+        <ons-list-title>Charmful</ons-list-title>
+        <ons-list id="links">
+            <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                           onclick="FlowRouter.go('/landing')"
+                    >
+                <div class="left">
+                    <ons-icon icon="fa-external-link" style="color: grey;"></ons-icon>
+                </div>
+                <div class="center">
+                    Story #1
+                </div>
+            </ons-list-item>
+            <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                           onclick="window.open('https://onsen.io/')"
+                    >
+                <div class="left">
+                    <ons-icon icon="fa-external-link" style="color: grey;"></ons-icon>
+                </div>
+                <div class="center">
+                    Onsen UI 2.0
+                </div>
+            </ons-list-item>
+            <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                           onclick="window.open('https://community.onsen.io/')"
+                    >
+                <div class="left">
+                    <ons-icon icon="fa-external-link" style="color: grey;"></ons-icon>
+                </div>
+                <div class="center">
+                    Community Forum
+                </div>
+            </ons-list-item>
+        </ons-list>
 
-        <div class="list-todos">
-          <a class="js-new-list link-list-new">
-            <span class="icon-plus"></span>
-            {{_ 'layouts.appBody.newList'}}
-          </a>
 
-          {{#each list in lists}}
-            <a href="{{pathFor 'Lists.show' _id=list._id}}" title="{{list.name}}"
-                class="list-todo {{activeListClass list}}">
-              {{#if list.userId}}
-                <span class="icon-lock"></span>
-              {{/if}}
+        <ons-list-title>Default</ons-list-title>
+        <ons-list id="default-category-list">
+            <ons-list-item tappable>
+                <div class="left">
+                    <ons-radio name="categoryGroup" input-id="r-all" checked></ons-radio>
+                </div>
+                <label class="center" for="r-all">All</label>
+            </ons-list-item>
+            <ons-list-item tappable category-id="">
+                <div class="left">
+                    <ons-radio name="categoryGroup" input-id="r-no"></ons-radio>
+                </div>
+                <label class="center" for="r-no">No category</label>
+            </ons-list-item>
+        </ons-list>
 
-              {{#if list.incompleteCount}}
-                <span class="count-list">{{list.incompleteCount}}</span>
-              {{/if}}
-
-              {{list.name}}
-            </a>
-          {{/each}}
-        </div>
-      </section>
-
-      {{#unless connected}}
-        <div class="notifications">
-          <div class="notification">
-            <span class="icon-sync"></span>
-            <div class="meta">
-              <div class="title-notification">
-                {{_ 'layouts.appBody.tryingToConnect'}}
-              </div>
-              <div class="description">
-                {{_ 'layouts.appBody.connectionIssue'}}
-              </div>
-            </div>
-          </div>
-        </div>
-      {{/unless}}
-
-      <div class="content-overlay"></div>
-
-      <div id="content-container">
-        {{#momentum plugin="fade"}}
-          {{#if Template.subscriptionsReady}}
-            {{> Template.dynamic template=main}}
-          {{else}}
-            {{> App_loading}}
-          {{/if}}
-        {{/momentum}}
-      </div>
-    </div>
-  {{/HammerTouchArea}}
+        <ons-list-title>Custom categories</ons-list-title>
+        <ons-list id="custom-category-list">
+        </ons-list>
+    </ons-page>
 </template>
